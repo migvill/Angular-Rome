@@ -1,0 +1,16 @@
+{
+  "name": "angular-rome",
+  "version": "0.2.11",
+  "description": "An Angular directive for Rome, a dependency free datepicker",
+  "author": "Devin Clark <dclark@wdtinc.com> (http://devin-clark.com)",
+  "license": "Apache License 2.0",
+  "main": "./src/rome.js",
+  "dependencies": {
+    "angular": "1.4.2",
+    "bullseye": "1.4.6",
+    "contra": "1.9.1",
+    "crossvent": "1.5.3",
+    "moment": "2.11.1",
+    "rome": "git+ssh://github.com/migvill/rome.git#master"
+  }
+}
