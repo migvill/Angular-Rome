@@ -68,10 +68,20 @@ angular.module('rome', [])
         },
         require: '^ngModel',
         template: '<div class="rome-container">' +
-          '<span class="rome-view">{{formattedValue}}</span><input type="text" ng-transclude class="rome-input"></div>',
+          '<input type="text" ng-transclude class="rome-input"></div>',
         link: function (scope, el, attrs) {
           var rome_instance;
           var input = el.find('input');
+
+          /* Simple JS merge function */
+          var _merge = function(obj, src) {
+            for (var key in src) {
+              if (src.hasOwnProperty(key)) {
+                obj[key] = src[key];
+              }
+            }
+            return obj;
+          };
 
           /**
            * Rome Config
