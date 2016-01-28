@@ -1,6 +1,6 @@
 {
   "name": "angular-rome",
-  "version": "0.2.10",
+  "version": "0.2.11",
   "description": "An Angular directive for Rome, a dependency free datepicker",
   "main": "index.js",
   "scripts": {
@@ -17,7 +17,7 @@
   "dependencies": {
     "lodash.merge": "^2.4.1",
     "moment": "2.10.x",
-    "rome": "2.1.x"
+    "rome": "git+ssh://github.com/migvill/rome.git#master"
   },
   "devDependencies": {
     "grunt": "^0.4.5",

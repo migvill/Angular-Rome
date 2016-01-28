@@ -19,8 +19,8 @@ rome_module.provider('romeDefaults', function romeDefaultsProvider() {
 rome_module.directive('rome', ['romeDefaults', '$interval', function romeDirective(romeDefaults, $interval) {
   "use strict";
 
-  function stringToBool(str) {
-    return (str) ? ((str == 'true') ? true : false) : true
+  function stringToBool(str, fallback) {
+    return (typeof str === 'string') ? str === 'true' : fallback;
   }
 
   /**
@@ -85,17 +85,31 @@ rome_module.directive('rome', ['romeDefaults', '$interval', function romeDirecti
        * Merge romeDefaults with an object to avoid romeDefaults being modified in the merge.
        */
       var temp_config = _merge({}, romeDefaults);
+      /* convert strings to a boolean */
+      if (typeof attrs.romeAutoClose === 'string' && attrs.romeAutoClose !== 'time') {
+        attrs.romeAutoClose = attrs.romeAutoClose === 'true';
+      }
+
       var config = _merge(temp_config, {
-        time: stringToBool(attrs.romeTime),
-        date: stringToBool(attrs.romeDate),
+        appendTo: attrs.romeAppendTo,
+        autoClose: attrs.romeAutoClose,
+        autoHideOnBlur: stringToBool(attrs.romeAutoHideOnBlur, true),
+        autoHideOnClick: stringToBool(attrs.romeAutoHideOnClick, true),
+        date: stringToBool(attrs.romeDate, true),
+        dayFormat: attrs.romeDayFormat,
         initialValue: attrs.romeInitialValue || moment().millisecond(0).second(0).minute(0).hour(0),
-        autoHideOnBlur: true,
-        weekStart: attrs.romeWeekStart,
-        monthsInCalendar: attrs.romeMonthsInCalendar,
-        min: attrs.romeMin,
-        max: attrs.romeMax,
         inputFormat: attrs.romeInputFormat,
-        timeInterval: attrs.romeTimeInterval
+        max: attrs.romeMax,
+        min: attrs.romeMin,
+        monthFormat: attrs.romeMonthFormat,
+        monthsInCalendar: attrs.romeMonthsInCalendar,
+        required: stringToBool(attrs.romeRequired, false),
+        time: stringToBool(attrs.romeTime, true),
+        timeFormat: attrs.romeTimeFormat,
+        timeInterval: attrs.romeTimeInterval,
+        timeOnTop: stringToBool(attrs.romeTimeOnTop, false),
+        weekdayFormat: attrs.romeWeekdayFormat,
+        weekStart: attrs.romeWeekStart
       });
 
       /**
