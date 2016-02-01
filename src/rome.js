@@ -124,6 +124,39 @@ angular.module('rome', [])
            */
           rome_instance = rome(input[0], config);
 
+          /* Add some event listeners to the current Rome instance */
+          function initListeners() {
+            /* Event listeners on rome instance */
+            rome_instance.on('ready', function(opts) {
+              scope.$apply(function () {
+                rome_instance.setValue(scope.ngModel);
+                formatDate();
+                if (typeof scope.romeOnReady === 'function') {
+                  scope.romeOnReady({options: opts, rome: rome_instance});
+                }
+              });
+            });
+
+            rome_instance.on('data', function (value, date) {
+              scope.$apply(function () {
+                scope.ngModel = value;
+                formatDate();
+                  console.log(value, date);
+                if (typeof scope.romeOnData === 'function') {
+                  scope.romeOnData({value: value, date: date});
+                }
+              });
+            });
+          }
+          initListeners();
+
+          /* Destroy and reinitialize the Rome instance */
+          function reinitRome(config) {
+            rome_instance.options(config);
+            /* rome_instance gets destroyed so we need to reinit events */
+            initListeners();
+          }
+
           // Hack to ensure all other rome directives are loaded so range validation will find a matching element.
           $interval(function () {
             rangeValidation(attrs, config);
@@ -156,31 +189,11 @@ angular.module('rome', [])
             scope.formattedValue = rome_instance.getDateString(attrs.viewFormat || romeDefaults.viewFormat) || romeDefaults.labelValue;
           }
 
-          rome_instance.on('ready', function(opts) {
-            scope.$apply(function () {
-              rome_instance.setValue(scope.ngModel);
-              formatDate();
-              if (typeof scope.romeOnReady === 'function') {
-                scope.romeOnReady({options: opts, rome: rome_instance});
-              }
-            });
-          });
-
-          rome_instance.on('data', function (value, date) {
-            scope.$apply(function () {
-              scope.ngModel = value;
-              formatDate();
-              if (typeof scope.romeOnData === 'function') {
-                scope.romeOnData({value: value, date: date});
-              }
-            });
-          });
-
           /* update rome instance with the initial value */
           scope.$watch('romeInitialValue', function(newValue) {
             if (newValue !== undefined) {
               config.initialValue = scope.romeInitialValue;
-              rome_instance.options(config);
+              reinitRome(config);
             }
           }, true);
 
@@ -188,7 +201,7 @@ angular.module('rome', [])
           scope.$watch('romeMin', function(newValue) {
             if (newValue !== undefined) {
               config.min = scope.romeMin;
-              rome_instance.options(config);
+              reinitRome(config);
             }
           }, true);
 
@@ -196,7 +209,7 @@ angular.module('rome', [])
           scope.$watch('romeMax', function(newValue) {
             if (newValue !== undefined) {
               config.max = scope.romeMax;
-              rome_instance.options(config);
+              reinitRome(config);
             }
           }, true);
 
