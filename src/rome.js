@@ -65,12 +65,14 @@ angular.module('rome', [])
         scope: {
           ngModel: '=',
           ngChange: '=?',
+          romeInitialValue: '=',
+          romeMax: '=',
+          romeMin: '=',
           romeOnData: '&',
           romeOnReady: '&'
         },
         require: '^ngModel',
-        template: '<div class="rome-container">' +
-          '<input type="text" ng-transclude class="rome-input"></div>',
+        template: '<div class="rome-container"><input type="text" ng-transclude class="rome-input"></div>',
         link: function (scope, el, attrs) {
           var rome_instance;
           var input = el.find('input');
@@ -105,10 +107,7 @@ angular.module('rome', [])
             autoHideOnClick: stringToBool(attrs.romeAutoHideOnClick, true),
             date: stringToBool(attrs.romeDate, true),
             dayFormat: attrs.romeDayFormat,
-            initialValue: attrs.romeInitialValue || moment().millisecond(0).second(0).minute(0).hour(0),
             inputFormat: attrs.romeInputFormat,
-            max: attrs.romeMax,
-            min: attrs.romeMin,
             monthFormat: attrs.romeMonthFormat,
             monthsInCalendar: attrs.romeMonthsInCalendar,
             required: stringToBool(attrs.romeRequired, false),
@@ -176,6 +175,30 @@ angular.module('rome', [])
               }
             });
           });
+
+          /* update rome instance with the initial value */
+          scope.$watch('romeInitialValue', function(newValue) {
+            if (newValue !== undefined) {
+              config.initialValue = scope.romeInitialValue;
+              rome_instance.options(config);
+            }
+          }, true);
+
+          /* update rome instance with new MIN value */
+          scope.$watch('romeMin', function(newValue) {
+            if (newValue !== undefined) {
+              config.min = scope.romeMin;
+              rome_instance.options(config);
+            }
+          }, true);
+
+          /* update rome instance with new MAX value */
+          scope.$watch('romeMax', function(newValue) {
+            if (newValue !== undefined) {
+              config.max = scope.romeMax;
+              rome_instance.options(config);
+            }
+          }, true);
 
           scope.$watch('ngModel', function(value) {
             if (value) {
