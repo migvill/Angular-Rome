@@ -65,11 +65,14 @@ angular.module('rome', [])
         scope: {
           ngModel: '=',
           ngChange: '=?',
+          romeDate: '=',
           romeInitialValue: '=',
+          romeInputFormat: '=',
           romeMax: '=',
           romeMin: '=',
           romeOnData: '&',
-          romeOnReady: '&'
+          romeOnReady: '&',
+          romeTime: '='
         },
         require: '^ngModel',
         template: '<div class="rome-container"><input type="text" ng-transclude class="rome-input"></div>',
@@ -105,13 +108,10 @@ angular.module('rome', [])
             autoClose: attrs.romeAutoClose,
             autoHideOnBlur: stringToBool(attrs.romeAutoHideOnBlur, true),
             autoHideOnClick: stringToBool(attrs.romeAutoHideOnClick, true),
-            date: stringToBool(attrs.romeDate, true),
             dayFormat: attrs.romeDayFormat,
-            inputFormat: attrs.romeInputFormat,
             monthFormat: attrs.romeMonthFormat,
             monthsInCalendar: attrs.romeMonthsInCalendar,
             required: stringToBool(attrs.romeRequired, false),
-            time: stringToBool(attrs.romeTime, true),
             timeFormat: attrs.romeTimeFormat,
             timeInterval: attrs.romeTimeInterval,
             timeOnTop: stringToBool(attrs.romeTimeOnTop, false),
@@ -141,7 +141,6 @@ angular.module('rome', [])
               scope.$apply(function () {
                 scope.ngModel = value;
                 formatDate();
-                  console.log(value, date);
                 if (typeof scope.romeOnData === 'function') {
                   scope.romeOnData({value: value, date: date});
                 }
@@ -192,7 +191,7 @@ angular.module('rome', [])
           /* update rome instance with the initial value */
           scope.$watch('romeInitialValue', function(newValue) {
             if (newValue !== undefined) {
-              config.initialValue = scope.romeInitialValue;
+              config.initialValue = newValue;
               reinitRome(config);
             }
           }, true);
@@ -200,7 +199,7 @@ angular.module('rome', [])
           /* update rome instance with new MIN value */
           scope.$watch('romeMin', function(newValue) {
             if (newValue !== undefined) {
-              config.min = scope.romeMin;
+              config.min = newValue;
               reinitRome(config);
             }
           }, true);
@@ -208,10 +207,34 @@ angular.module('rome', [])
           /* update rome instance with new MAX value */
           scope.$watch('romeMax', function(newValue) {
             if (newValue !== undefined) {
-              config.max = scope.romeMax;
+              config.max = newValue;
               reinitRome(config);
             }
           }, true);
+
+          /* Update the Rome input format */
+          scope.$watch('romeInputFormat', function(newValue) {
+            if (newValue !== undefined) {
+              config.inputFormat = newValue;
+              reinitRome(config);
+            }
+          });
+
+          /* Update date flag */
+          scope.$watch('romeDate', function(newValue) {
+            if (newValue !== undefined) {
+              config.date = newValue;
+              reinitRome(config);
+            }
+          });
+
+          /* Update time flag */
+          scope.$watch('romeTime', function(newValue) {
+            if (newValue !== undefined) {
+              config.time = newValue;
+              reinitRome(config);
+            }
+          });
 
           scope.$watch('ngModel', function(value) {
             if (value) {
