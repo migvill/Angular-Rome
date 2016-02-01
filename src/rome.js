@@ -64,7 +64,9 @@ angular.module('rome', [])
         transclude: 'attributes',
         scope: {
           ngModel: '=',
-          ngChange: '=?'
+          ngChange: '=?',
+          romeOnData: '&',
+          romeOnReady: '&'
         },
         require: '^ngModel',
         template: '<div class="rome-container">' +
@@ -155,17 +157,23 @@ angular.module('rome', [])
             scope.formattedValue = rome_instance.getDateString(attrs.viewFormat || romeDefaults.viewFormat) || romeDefaults.labelValue;
           }
 
-          rome_instance.on('ready', function() {
+          rome_instance.on('ready', function(opts) {
             scope.$apply(function () {
               rome_instance.setValue(scope.ngModel);
               formatDate();
+              if (typeof scope.romeOnReady === 'function') {
+                scope.romeOnReady({options: opts, rome: rome_instance});
+              }
             });
           });
 
-          rome_instance.on('data', function (value) {
+          rome_instance.on('data', function (value, date) {
             scope.$apply(function () {
               scope.ngModel = value;
               formatDate();
+              if (typeof scope.romeOnData === 'function') {
+                scope.romeOnData({value: value, date: date});
+              }
             });
           });
 
