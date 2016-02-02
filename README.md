@@ -4,9 +4,9 @@ An Angular directive wrapping [Rome](http://bevacqua.github.io/rome/).
 
 ## Installation
 
-### npm
+### bower
 ```
-npm i angular-rome --save
+bower i angular-rome --save
 ```
 
 Then inject it into your Angular module.

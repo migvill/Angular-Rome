@@ -185,61 +185,59 @@ angular.module('rome', [])
 
           function formatDate() {
             scope.ngModel = rome_instance.getDateString();
-            scope.formattedValue = rome_instance.getDateString(attrs.viewFormat || romeDefaults.viewFormat) || romeDefaults.labelValue;
           }
 
           /* update rome instance with the initial value */
-          scope.$watch('romeInitialValue', function(newValue) {
-            if (newValue !== undefined) {
+          scope.$watch('romeInitialValue', function(newValue, oldValue) {
+            if (newValue !== oldValue) {
               config.initialValue = newValue;
               reinitRome(config);
             }
           }, true);
 
           /* update rome instance with new MIN value */
-          scope.$watch('romeMin', function(newValue) {
-            if (newValue !== undefined) {
+          scope.$watch('romeMin', function(newValue, oldValue) {
+            if (newValue !== oldValue) {
               config.min = newValue;
               reinitRome(config);
             }
           }, true);
 
           /* update rome instance with new MAX value */
-          scope.$watch('romeMax', function(newValue) {
-            if (newValue !== undefined) {
+          scope.$watch('romeMax', function(newValue, oldValue) {
+            if (newValue !== oldValue) {
               config.max = newValue;
               reinitRome(config);
             }
           }, true);
 
           /* Update the Rome input format */
-          scope.$watch('romeInputFormat', function(newValue) {
-            if (newValue !== undefined) {
+          scope.$watch('romeInputFormat', function(newValue, oldValue) {
+            if (newValue !== oldValue) {
               config.inputFormat = newValue;
               reinitRome(config);
             }
           });
 
           /* Update date flag */
-          scope.$watch('romeDate', function(newValue) {
-            if (newValue !== undefined) {
+          scope.$watch('romeDate', function(newValue, oldValue) {
+            if (newValue !== oldValue) {
               config.date = newValue;
               reinitRome(config);
             }
           });
 
           /* Update time flag */
-          scope.$watch('romeTime', function(newValue) {
-            if (newValue !== undefined) {
+          scope.$watch('romeTime', function(newValue, oldValue) {
+            if (newValue !== oldValue) {
               config.time = newValue;
               reinitRome(config);
             }
           });
 
-          scope.$watch('ngModel', function(value) {
-            if (value) {
-              rome_instance.setValue(value);
-              scope.formattedValue = rome_instance.getDateString(attrs.viewFormat || romeDefaults.viewFormat) || romeDefaults.labelValue;
+          scope.$watch('ngModel', function(newValue, oldValue) {
+            if (newValue !== oldValue) {
+              rome_instance.setValue(newValue);
             }
           }, true);
         }

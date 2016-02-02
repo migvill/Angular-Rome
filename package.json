@@ -2,7 +2,7 @@
   "name": "angular-rome",
   "version": "0.2.11",
   "description": "An Angular directive for Rome, a dependency free datepicker",
-  "main": "index.js",
+  "main": "./src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
