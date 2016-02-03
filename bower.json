@@ -10,7 +10,7 @@
     "bullseye": "1.4.6",
     "contra": "1.9.1",
     "crossvent": "1.5.3",
-    "moment": "2.11.1",
+    "moment": "2.10.x",
     "rome": "git+ssh://github.com/migvill/rome.git#master"
   }
 }
