@@ -236,7 +236,8 @@ angular.module('rome', [])
           });
 
           scope.$watch('ngModel', function(newValue, oldValue) {
-            if (newValue !== oldValue) {
+            /* set the initial value only on first load */
+            if (newValue !== oldValue && oldValue === undefined) {
               rome_instance.setValue(newValue);
             }
           }, true);
