@@ -2,6 +2,8 @@
 
 An Angular directive wrapping [Rome](http://bevacqua.github.io/rome/).
 
+Fork of https://github.com/DevinClark/Angular-Rome
+
 ## Installation
 
 ### bower
@@ -50,6 +52,7 @@ TODO: Write history
 ## Credits
 
 * Nicolas Bevacqua for beautifully crafting [Rome](http://bevacqua.github.io/rome/).
+* Devin Clark for writing original [Angular Directive](https://github.com/DevinClark/Angular-Rome)
 
 ## License
 

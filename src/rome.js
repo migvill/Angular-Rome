@@ -65,14 +65,14 @@ angular.module('rome', [])
         scope: {
           ngModel: '=',
           ngChange: '=?',
-          romeDate: '=',
-          romeInitialValue: '=',
-          romeInputFormat: '=',
-          romeMax: '=',
-          romeMin: '=',
-          romeOnData: '&',
-          romeOnReady: '&',
-          romeTime: '='
+          date: '=?romeDate',
+          initialValue: '=?romeInitialValue',
+          inputFormat: '=?romeInputFormat',
+          max: '=?romeMax',
+          min: '=?romeMin',
+          onData: '&romeOnData',
+          onReady: '&romeOnReady',
+          time: '=?romeTime'
         },
         require: '^ngModel',
         template: '<div class="rome-container"><input type="text" ng-transclude class="rome-input"></div>',
@@ -129,20 +129,16 @@ angular.module('rome', [])
             /* Event listeners on rome instance */
             rome_instance.on('ready', function(opts) {
               scope.$apply(function () {
-                rome_instance.setValue(scope.ngModel);
-                formatDate();
-                if (typeof scope.romeOnReady === 'function') {
-                  scope.romeOnReady({options: opts, rome: rome_instance});
+                if (typeof scope.onReady === 'function') {
+                  scope.onReady({options: opts, rome: rome_instance});
                 }
               });
             });
 
             rome_instance.on('data', function (value, date) {
               scope.$apply(function () {
-                scope.ngModel = value;
-                formatDate();
-                if (typeof scope.romeOnData === 'function') {
-                  scope.romeOnData({value: value, date: date});
+                if (typeof scope.onData === 'function') {
+                  scope.onData({value: value, date: date});
                 }
               });
             });
@@ -188,51 +184,39 @@ angular.module('rome', [])
           }
 
           /* update rome instance with the initial value */
-          scope.$watch('romeInitialValue', function(newValue, oldValue) {
-            if (newValue !== oldValue) {
-              config.initialValue = newValue;
-              reinitRome(config);
-            }
-          }, true);
+          scope.$watch('initialValue', function(newValue, oldValue) {
+            config.initialValue = newValue;
+            reinitRome(config);
+          });
 
           /* update rome instance with new MIN value */
-          scope.$watch('romeMin', function(newValue, oldValue) {
-            if (newValue !== oldValue) {
-              config.min = newValue;
-              reinitRome(config);
-            }
-          }, true);
+          scope.$watch('min', function(newValue, oldValue) {
+            config.min = newValue;
+            reinitRome(config);
+          });
 
           /* update rome instance with new MAX value */
-          scope.$watch('romeMax', function(newValue, oldValue) {
-            if (newValue !== oldValue) {
-              config.max = newValue;
-              reinitRome(config);
-            }
-          }, true);
+          scope.$watch('max', function(newValue, oldValue) {
+            config.max = newValue;
+            reinitRome(config);
+          });
 
           /* Update the Rome input format */
-          scope.$watch('romeInputFormat', function(newValue, oldValue) {
-            if (newValue !== oldValue) {
-              config.inputFormat = newValue;
-              reinitRome(config);
-            }
+          scope.$watch('inputFormat', function(newValue, oldValue) {
+            config.inputFormat = newValue;
+            reinitRome(config);
           });
 
           /* Update date flag */
-          scope.$watch('romeDate', function(newValue, oldValue) {
-            if (newValue !== oldValue) {
-              config.date = newValue;
-              reinitRome(config);
-            }
+          scope.$watch('date', function(newValue, oldValue) {
+            config.time = newValue;
+            reinitRome(config);
           });
 
           /* Update time flag */
-          scope.$watch('romeTime', function(newValue, oldValue) {
-            if (newValue !== oldValue) {
-              config.time = newValue;
-              reinitRome(config);
-            }
+          scope.$watch('time', function(newValue, oldValue) {
+            config.time = newValue;
+            reinitRome(config);
           });
 
           scope.$watch('ngModel', function(newValue, oldValue) {
