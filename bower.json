@@ -11,6 +11,6 @@
     "contra": "1.9.1",
     "crossvent": "1.5.3",
     "moment": "2.10.x",
-    "rome": "git+ssh://github.com/migvill/rome.git#master"
+    "rome": "git+ssh://github.com/migvill/rome.git#2.1.23"
   }
 }
