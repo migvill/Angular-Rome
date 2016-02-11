@@ -7,10 +7,6 @@
   "main": "./src/rome.js",
   "dependencies": {
     "angular": "1.4.2",
-    "bullseye": "1.4.6",
-    "contra": "1.9.1",
-    "crossvent": "1.5.3",
-    "moment": "2.10.x",
-    "rome": "git+ssh://github.com/migvill/rome.git#2.1.23"
+    "rome": "git://github.com/migvill/rome.git#2.1.23"
   }
 }
