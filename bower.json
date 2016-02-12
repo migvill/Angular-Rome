@@ -7,6 +7,6 @@
   "main": "./src/rome.js",
   "dependencies": {
     "angular": "1.4.2",
-    "rome": "git://github.com/migvill/rome.git#2.1.23"
+    "rome": "git://github.com/migvill/rome.git#2.1.24"
   }
 }
