@@ -75,7 +75,7 @@ angular.module('rome', [])
           time: '=?romeTime'
         },
         require: '^ngModel',
-        template: '<div class="rome-container"><input type="text" ng-transclude class="rome-input"></div>',
+        template: '<div class="rome-container"><input type="text" ng-transclude class="rome-input" readonly></div>',
         link: function (scope, el, attrs) {
           var rome_instance;
           var input = el.find('input');
@@ -112,6 +112,7 @@ angular.module('rome', [])
             monthFormat: attrs.romeMonthFormat,
             monthsInCalendar: attrs.romeMonthsInCalendar,
             required: stringToBool(attrs.romeRequired, false),
+            scrollWithParent: attrs.romeScrollWithParent,
             timeFormat: attrs.romeTimeFormat,
             timeInterval: attrs.romeTimeInterval,
             timeOnTop: stringToBool(attrs.romeTimeOnTop, false),
